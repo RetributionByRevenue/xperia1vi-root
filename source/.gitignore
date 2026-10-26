@@ -1,6 +1,0 @@
-sdk/
-build/
-anchor/build/
-anchor/jni/
-*.apk
-*.keystore

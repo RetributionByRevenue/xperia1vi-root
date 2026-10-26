@@ -15,7 +15,15 @@ GhostLock (CVE-2026-43499) via USB adb. No bootloader unlock, no flashing.
 | `ghostlock_native` | The exploit binary (runs on the phone via adb shell) |
 | `xperia_profile_v4.bin` | Device profile — kernel offsets, all values derived automatically from the kernel itself |
 | `sample-success.log` | What a successful run looks like |
+| `auto-root.sh` | PC-side re-root after every reboot |
 | `full-writeup/` | The complete project history: pivots, confirmed findings, dead ends, the winning run |
+
+> **About the binary:** `ghostlock_native` is the prebuilt exploit core from
+> [YuKongA/ghostlock-app](https://github.com/YuKongA/ghostlock-app)
+> (Apache-2.0) — the community implementation of CVE-2026-43499. This repo
+> does not compile it; for the exploit's source and to build it yourself,
+> use that upstream project. Everything else here (the device profile, the
+> PC-side re-root script, the writeup) is from this project.
 
 ## Requirements
 
