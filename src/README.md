@@ -71,24 +71,6 @@ src/
 │   └── vivoxfold3pro/      # Vivo X Fold3 Pro
 ```
 
-## Anchor app (auto-root on boot)
-
-The `anchor-src/` directory contains the source for an Android app that
-automatically re-runs the exploit after each reboot:
-
-```
-anchor-src/
-├── miniboot.c              # Native exploit launcher
-├── auto-root.sh            # Automated root script
-├── root.sh                 # Root helper
-├── boot-autoroot.sh        # Boot-triggered auto-root
-└── anchor/                 # Android app (Java + JNI)
-    ├── MainActivity.java
-    ├── BootReceiver.java
-    ├── AndroidManifest.xml
-    └── ...
-```
-
 ## Adding support for another device
 
 1. Extract a `vmlinux` or `kallsyms` from the device's boot image.
