@@ -1,0 +1,6 @@
+*.o
+*.pyc
+__pycache__/
+anchor-src/anchor/build/
+anchor-src/anchor/assets/adbkey
+anchor-src/anchor/assets/adbkey.pub

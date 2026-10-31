@@ -15,22 +15,15 @@ GhostLock (CVE-2026-43499) via USB adb. No bootloader unlock, no flashing.
 | `ghostlock_native` | The exploit binary (runs on the phone via adb shell) |
 | `xperia_profile_v4.bin` | Device profile — kernel offsets, all values derived automatically from the kernel itself |
 | `sample-success.log` | What a successful run looks like |
+| `src/` | Complete exploit source code — build it yourself, study the mechanism |
+| `anchor-src/` | Android app source for auto-root on boot (miniboot + Java app) |
 | `full-writeup/` | The complete project history: pivots, confirmed findings, dead ends, the winning run |
 
-> **Binary provenance (transparency statement):** `ghostlock_native` is the
-> exploit core **extracted from the official GhostLock.apk** (v1.2,
-> versionCode 586) of [YuKongA/ghostlock-app](https://github.com/YuKongA/ghostlock-app)
-> (Apache-2.0) — it is byte-identical to that APK's
-> `lib/arm64-v8a/libghostlock.so`. This repo does not compile it; to build
-> the exploit from source, use the upstream project (source snapshot
-> verified at commit `413c86acbf0993703acf18ada53da84a1dbd572b`).
->
-> - sha256: `6890fd2a0c9170ae6a97050d4bfce59197f4b3a2ca6b0f5aa94c9de456a6f5fb`
-> - md5: `4cf3f571048ebb6034d09d18c9db36d0`
->
-> Everything else here (the device profile, the writeup) is from this
-> project. This repo covers the **exploit chain only** — root is per-boot by
-> the exploit's design; persistence mechanisms are out of scope.
+> **Binary provenance:** `ghostlock_native` is derived from
+> [YuKongA/ghostlock-app](https://github.com/YuKongA/ghostlock-app) (Apache-2.0).
+> The full source code is included in `src/` — see [`src/README.md`](src/README.md)
+> for build instructions. This repo covers the **exploit chain only** — root is
+> per-boot by the exploit's design.
 
 ## Requirements
 
@@ -90,3 +83,14 @@ adb shell su -c id
   avoid them entirely. An OTA on a locked bootloader with kernel patching is a
   brick risk.
 - A panic during a run is possible — the phone simply reboots; retry.
+
+## Building from source
+
+See [`src/README.md`](src/README.md) for build instructions and source layout.
+Requires `aarch64-linux-gnu-gcc` (any recent cross-compiler). Includes device
+offsets for 14 devices (Xperia 1 VI, OnePlus 13, Vivo X200 Ultra, and more).
+
+## License
+
+This project is provided for educational and research purposes. The exploit
+source is derived from the GhostLock project (Apache-2.0). Use responsibly.
