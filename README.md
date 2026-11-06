@@ -17,7 +17,7 @@ GhostLock (CVE-2026-43499) via USB adb. No bootloader unlock, no flashing.
 | `sample-success.log` | What a successful run looks like |
 | `src/` | Complete exploit source code — build it yourself, study the mechanism |
 | `full-writeup/` | The complete project history: pivots, confirmed findings, dead ends, the winning run |
-| `BakaSU-v4.2.0-rc3.apk` | Root manager APK (known working version) |
+| `ReSukiSU-v4.2.0-rc3.apk` | Root manager APK (known working version — ReSukiSU CI build 35203) |
 
 > **Binary provenance:** `ghostlock_native` is derived from
 > [YuKongA/ghostlock-app](https://github.com/YuKongA/ghostlock-app) (Apache-2.0).
@@ -31,10 +31,11 @@ GhostLock (CVE-2026-43499) via USB adb. No bootloader unlock, no flashing.
 - **Airplane mode ON** (or at minimum WiFi off) before running the exploit —
   network activity generates kernel interrupts and workqueue churn that compete
   with the race window, significantly reducing the landing rate
-- **BakaSU v4.2.0-rc3** (formerly ReSukiSU) installed on the phone
+- **ReSukiSU CI v4.2.0-rc3** (build 35203) installed on the phone
   (`com.resukisu.resukisu`) — it supplies `libksud.so` and is the root-manager
-  UI. This specific version is known to work; other versions may not. A copy of
-  the APK is included at `BakaSU-v4.2.0-rc3.apk`
+  UI. This specific build is required; BakaSU (build 35171) from `Baka-SU/BakaSU`
+  does **not** work on this device. A copy of the APK is included at
+  `ReSukiSU-v4.2.0-rc3.apk`
 
 ## How it works (short)
 
@@ -46,7 +47,7 @@ GhostLock (CVE-2026-43499) via USB adb. No bootloader unlock, no flashing.
    SELinux permissive.
 4. **W2** — same trick overwrites the child task's `cred` with `init_cred` →
    the child task runs as **uid 0**.
-5. **Handoff** — the root script runs `ksud` (from BakaSU), which late-loads
+5. **Handoff** — the root script runs `ksud` (from ReSukiSU), which late-loads
    `kernelsu.ko` into the running kernel → persistent-for-this-boot KernelSU.
 
 ## Usage
@@ -80,7 +81,7 @@ adb shell su -c id
   it. After every reboot, re-run the exploit command. Expect roughly a 50%
   landing rate per boot — if it exits without `[+] KernelSU ready`, just reboot
   and run it again (1–2 tries is normal; let the phone cool between attempts).
-- Termux / other apps need a one-time grant in the BakaSU **Superuser**
+- Termux / other apps need a one-time grant in the ReSukiSU **Superuser**
   tab (adb shell is auto-trusted; normal apps are not). The grant also resets on
   reboot — re-grant after re-rooting.
 - **Do not take OTA updates** while rooted — an OTA on a locked bootloader with
