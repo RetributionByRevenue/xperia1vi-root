@@ -57,6 +57,10 @@ Push and run (from the folder containing the files):
 ```bash
 adb push ghostlock_native xperia_profile_v4.bin /data/local/tmp/
 adb shell "chmod 755 /data/local/tmp/ghostlock_native"
+# The exploit is a race — it may not land on the first attempt. You may need to
+# run the command below more than once. If nothing happens after ~4 minutes,
+# press Ctrl-C to stop it and re-run the same command again. Keep retrying
+# until you see `[+] KernelSU ready`.
 adb shell "/data/local/tmp/ghostlock_native --load-prebuilt-profile /data/local/tmp/xperia_profile_v4.bin --force-attack"
 ```
 
